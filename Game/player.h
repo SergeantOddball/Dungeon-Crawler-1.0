@@ -4,6 +4,7 @@
 #include <string>
 #include "enemy.h"
 
+class Enemy;
 class Player{
 public:
     Player();
@@ -17,6 +18,7 @@ public:
 
     void attack(Enemy& enemy);
     void takeDamage(int damage);
+    void gainXP(int amount);
     void levelup();
     void displayStats();
 };
