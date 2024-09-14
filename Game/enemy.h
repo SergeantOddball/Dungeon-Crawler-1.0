@@ -7,9 +7,10 @@ class Player;
 class Enemy {
 public:
 
-    Enemy(int h, int ap, int def, int xp);
+    Enemy(std::string name, int h, int ap, int def, int xp);
 
     // Enemy attributes
+    std::string name;
     int health;
     int attackPower;
     int defense;
@@ -18,7 +19,8 @@ public:
     // Enemy methods
     void attack(Player& player); 
     void takeDamage(int amount);  
-    bool isAlive();               
+    bool isAlive(); 
+    void displayEnemy();              
 };
 
 #endif
