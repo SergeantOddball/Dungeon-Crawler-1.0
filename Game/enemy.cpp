@@ -27,6 +27,6 @@ bool Enemy::isAlive(){
 }
 
 void Enemy::displayEnemy(){
-    cout << "You have encountered " << name << " .\n";
+    cout << "You have encountered " << name << ".\n";
     cout << "Health: " << health << " , Attack: " << attackPower << " , Defense: " << defense << "\n";
 }
