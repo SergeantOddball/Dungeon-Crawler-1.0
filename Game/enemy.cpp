@@ -8,10 +8,9 @@ using namespace std;
 Enemy::Enemy(std::string name, int h, int ap, int def, int xp) : name(name), health(h), attackPower(ap), defense(def), xpReward(xp) {}
 
 void Enemy::attack(Player& player){
-    int damage = attackPower - player.defense;
-    if(damage < 0){
-        damage = 0;
-    }
+    int damage = attackPower - (1 - player.defense / 100);
+    if (damage < 0) damage = 0;
+
     player.takeDamage(damage);
     //cout << "Enemy dealt " << damage << " damage to you.\n";
 

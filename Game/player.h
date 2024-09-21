@@ -15,10 +15,14 @@ public:
     int defense;
     int level;
     int xp;
+    int xpToLevel;
+    bool isGuarding;
 
     void attack(Enemy& enemy);
     void takeDamage(int damage);
     void gainXP(int amount);
+    void guard();
+    void stopGuard();
     void levelup();
     void displayStats();
 };

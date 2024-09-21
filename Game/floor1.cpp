@@ -30,7 +30,7 @@ vector<Enemy> generateAmbush(int numEnemies){
 }
 
 Enemy generateBoss(){
-    return Enemy("King Slime", 150, 20, 15, 100);
+    return Enemy("King Slime", 75, 10, 10, 100);
 }
 
 void runfloor1(Player& player, int floorNumber, int requiredSteps){
@@ -56,7 +56,7 @@ void runfloor1(Player& player, int floorNumber, int requiredSteps){
             bool ambushHappened = (rand() % 100 < 30); // 30% chance for ambush
 
             if(ambushHappened){
-                int numEnemies = rand() % 3 + 2;
+                int numEnemies = rand() % 2 + 1;
                 vector<Enemy> enemies = generateAmbush(numEnemies);
                 cout << "You have been ambused by " << enemies.size() << " enemies.\n";
 
@@ -73,7 +73,7 @@ void runfloor1(Player& player, int floorNumber, int requiredSteps){
                 while(!enemies.empty() && player.health > 0){
                     cout << "Remaining enemies: \n";
                     for (size_t i = 0; i < enemies.size(); ++i){
-                        cout << (i + 1) << ". " << enemies[i].name << " Health " << enemies[i].health << "\n";
+                        cout << (i + 1) << ". " << enemies[i].name << " : " << enemies[i].health << "\n";
                     }
 
                     int enemyChoice;
@@ -107,7 +107,7 @@ void runfloor1(Player& player, int floorNumber, int requiredSteps){
             
         
             else{
-                bool regularEncounter = (rand() % 100 < 40);
+                bool regularEncounter = (rand() % 100 < 30);
                 if(regularEncounter){
                     encounterHappened = true;
                     Enemy enemy = generateRandomEnemy();
@@ -116,6 +116,7 @@ void runfloor1(Player& player, int floorNumber, int requiredSteps){
                     while(enemy.isAlive() && player.health > 0){
                         cout << "1. Attack\n";
                         cout << "2. Flee\n";
+                        cout << "3. Guard" << endl;
                         cout << "What will you do? : ";
                         string action;
                         cin >> action;
@@ -124,7 +125,7 @@ void runfloor1(Player& player, int floorNumber, int requiredSteps){
                             player.attack(enemy);
 
                             if(!enemy.isAlive()){
-                                cout << " You have defeated " << enemy.name << ".\n";
+                                cout << "You have defeated " << enemy.name << ".\n";
                                 player.gainXP(enemy.xpReward);
                             }
                             else{
@@ -135,8 +136,14 @@ void runfloor1(Player& player, int floorNumber, int requiredSteps){
                             cout << " You have fled from combat.\n";
                             break;
                         }
+                        else if(action == "3"){
+                            player.guard();
+                            enemy.attack(player);
+                            player.stopGuard();
+                        }
                         else{
                             cout << "Invalid action. You have lost your turn.\n";
+                            enemy.attack(player);
                         }
 
                         if(player.health <= 0){
@@ -165,6 +172,7 @@ void runfloor1(Player& player, int floorNumber, int requiredSteps){
         while(boss.isAlive() && player.health > 0){
             cout << "1. Attack\n";
             cout << "2. Flee\n";
+            cout << "3. Guard" << endl;
             cout << "What will you do? : ";
             string action;
             cin >> action;
@@ -183,8 +191,14 @@ void runfloor1(Player& player, int floorNumber, int requiredSteps){
             else if(action == "2"){
                 cout << " You are unable to flee.\n";
             }
+            else if(action == "3"){
+                player.guard();
+                boss.attack(player);
+                player.stopGuard();
+            }
             else{
                 cout << "Invalid action. You have lost your turn.\n";
+                boss.attack(player);
             }
 
             if(player.health <= 0){
